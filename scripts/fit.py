@@ -1,12 +1,12 @@
 # scripts/fit.py
-# scripts/fit.py
 
-import pandas
+import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from category_encoders import CatBoostEncoder
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from catboost import CatBoostClassifier
+from sklearn.linear_model import LogisticRegression
 import yaml
 import os
 import joblib
@@ -17,7 +17,7 @@ def fit_model():
     with open('params.yaml', 'r') as fd:
         params = yaml.safe_load(fd)
     # загрузите результат предыдущего шага: inital_data.csv
-    data = pandas.read_csv('data/initial_data.csv')
+    data = pd.read_csv('data/initial_data.csv')
     # реализуйте основную логику шага с использованием гиперпараметров
     cat_features = data.select_dtypes(include='object')
     potential_binary_features = cat_features.nunique() == 2
@@ -41,9 +41,9 @@ def fit_model():
         [
             ('preprocessor', preprocessor),
             ('model', model)
-        ]
-        )
+        ])
     pipeline.fit(data, data[params['target_col']]) 
+
 	# сохраните обученную модель в models/fitted_model.pkl
     os.makedirs('models', exist_ok=True)
     with open('models/fitted_model.pkl', 'wb') as fd:

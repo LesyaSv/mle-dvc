@@ -16,15 +16,15 @@ def evaluate_model():
     # загрузите результат прошлого шага: fitted_model.pkl
     data = pd.read_csv('data/initial_data.csv')
     with open('models/fitted_model.pkl', 'rb') as fd:
-        model = joblib.load(fd) 
+        pipeline = joblib.load(fd) 
     # реализуйте основную логику шага с использованием прочтённых гиперпараметров
     cv_strategy = StratifiedKFold(n_splits=params['n_splits'])
     cv_res = cross_validate(
-        model,
+        pipeline,
         data,
         data[params['target_col']],
         cv=cv_strategy,
-        n_jobs=-1,
+        n_jobs=params['n_jobs'],
         scoring=params['metrics']
     )
     for key, value in cv_res.items():

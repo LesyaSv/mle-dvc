@@ -5,53 +5,51 @@ stages:
     deps:
     - path: scripts/data.py
       hash: md5
-      md5: 43fcca6802a67bf387ed6f743ea6fb39
-      size: 1492
+      md5: 0925261b707ef36d4b028dcb87665ee9
+      size: 1561
     params:
       params.yaml:
         index_col: customer_id
     outs:
     - path: data/initial_data.csv
       hash: md5
-      md5: eddaab7cd9efbe42294b1a5dad90fd6b
-      size: 865601
-      cloud:
-        my_storage:
-          etag: eddaab7cd9efbe42294b1a5dad90fd6b
-          version_id: 000614A4BA2B968B
+      md5: c2e35cf1d5fc036299a92f81d3128415
+      size: 902261
   fit_model:
     cmd: python scripts/fit.py
     deps:
     - path: data/initial_data.csv
       hash: md5
-      md5: eddaab7cd9efbe42294b1a5dad90fd6b
-      size: 865601
+      md5: c2e35cf1d5fc036299a92f81d3128415
+      size: 902261
     - path: scripts/fit.py
       hash: md5
-      md5: 7fcf4c2bdbe67197aff3c080639a0317
-      size: 2080
+      md5: 9300322391caa66b85bcb1dc14fc2058
+      size: 2109
     params:
       params.yaml:
         auto_class_weights: Balanced
         index_col: customer_id
+        log_c: 1
+        log_penalty: l2
         one_hot_drop: first
         target_col: target
     outs:
     - path: models/fitted_model.pkl
       hash: md5
-      md5: 0f2bac011ef988054d6c884c5e78e762
-      size: 1385464
+      md5: ed3e96c19cc6d05e11e24642bb0bc764
+      size: 1390664
   evaluate_model:
     cmd: python scripts/evaluate.py
     deps:
     - path: models/fitted_model.pkl
       hash: md5
-      md5: 0f2bac011ef988054d6c884c5e78e762
-      size: 1385464
+      md5: ed3e96c19cc6d05e11e24642bb0bc764
+      size: 1390664
     - path: scripts/evaluate.py
       hash: md5
-      md5: ae8c65331a9df1b35d5bf9f9560338e3
-      size: 1350
+      md5: 8a99ca9be20ee52265389bc3479e9eea
+      size: 1370
     params:
       params.yaml:
         index_col: customer_id
@@ -64,5 +62,5 @@ stages:
     outs:
     - path: cv_results/cv_res.json
       hash: md5
-      md5: 537168689debdf234417d11e34dd48d4
-      size: 78
+      md5: 9bcbd01e005838234ac98125be728208
+      size: 80

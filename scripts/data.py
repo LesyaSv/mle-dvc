@@ -1,7 +1,8 @@
 ## scripts/data.py
-
-
+import pandas as pd
+from sqlalchemy import create_engine
 import os
+from dotenv import load_dotenv
 import yaml
 
 # 2 — вспомогательные функции
@@ -14,14 +15,14 @@ def create_connection():
     db = os.environ.get('DB_DESTINATION_NAME')
     username = os.environ.get('DB_DESTINATION_USER')
     password = os.environ.get('DB_DESTINATION_PASSWORD')
-    from sqlalchemy import create_engine
+    
     print(f'postgresql://{username}:{password}@{host}:{port}/{db}')
     conn = create_engine(f'postgresql://{username}:{password}@{host}:{port}/{db}', connect_args={'sslmode':'require'})
     return conn
 
 # 3 — главная функция
 def get_data():
-    import pandas
+   
     # 3.1 — загрузка гиперпараметров
     with open('params.yaml', 'r') as fd:
         params = yaml.safe_load(fd)
@@ -29,8 +30,9 @@ def get_data():
 
     # 3.3 — основная логика
     conn = create_connection()
-    data = pandas.read_sql('select * from users_churn', conn, index_col=params['index_col'])
+    data = pd.read_sql('select * from clean_users_churn', conn, index_col=params['index_col'])
     print(data)
+    print(data.isnull().sum())
     #conn.dispose()
     
     # 3.4 — сохранение результата шага
