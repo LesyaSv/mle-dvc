@@ -24,8 +24,8 @@ stages:
       size: 902261
     - path: scripts/fit.py
       hash: md5
-      md5: d852491f59cda384004815b9383a8f10
-      size: 1883
+      md5: a6a18853f8585047663dab4a21b69bb3
+      size: 1642
     params:
       params.yaml:
         auto_class_weights: Balanced
