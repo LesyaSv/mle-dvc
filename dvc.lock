@@ -24,8 +24,8 @@ stages:
       size: 902261
     - path: scripts/fit.py
       hash: md5
-      md5: 9300322391caa66b85bcb1dc14fc2058
-      size: 2109
+      md5: d852491f59cda384004815b9383a8f10
+      size: 1883
     params:
       params.yaml:
         auto_class_weights: Balanced
@@ -37,15 +37,15 @@ stages:
     outs:
     - path: models/fitted_model.pkl
       hash: md5
-      md5: ed3e96c19cc6d05e11e24642bb0bc764
-      size: 1390664
+      md5: ddc526eb3cdb6e946f159e42a840cdd9
+      size: 207806
   evaluate_model:
     cmd: python scripts/evaluate.py
     deps:
     - path: models/fitted_model.pkl
       hash: md5
-      md5: ed3e96c19cc6d05e11e24642bb0bc764
-      size: 1390664
+      md5: ddc526eb3cdb6e946f159e42a840cdd9
+      size: 207806
     - path: scripts/evaluate.py
       hash: md5
       md5: 8a99ca9be20ee52265389bc3479e9eea
@@ -62,5 +62,5 @@ stages:
     outs:
     - path: cv_results/cv_res.json
       hash: md5
-      md5: 9bcbd01e005838234ac98125be728208
-      size: 80
+      md5: 8675b159902299209e490ce4758a130a
+      size: 77
